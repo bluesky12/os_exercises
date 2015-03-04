@@ -45,7 +45,7 @@
 搭建好实验环境，请描述碰到的困难和解决的过程。
 - [x]  
 
-> 
+> 暂无。
 
 熟悉基本的git命令行操作命令，从github上
 的 http://www.github.com/chyyuu/ucore_lab 下载
@@ -57,7 +57,7 @@ ucore lab实验
 尝试用qemu+gdb（or ECLIPSE-CDT）调试lab1
 - [x]   
 
-> 
+> 尝试中。
 
 对于如下的代码段，请说明”：“后面的数字是什么含义
 ```
