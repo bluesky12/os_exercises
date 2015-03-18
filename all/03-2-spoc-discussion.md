@@ -88,43 +88,44 @@ Virtual Address 7268:
       --> Translates to Physical Address 0xca8 --> Value: 16
 ```
 Virtual Address 6c74:
-  --> pde index:0x1b  pde contents:(valid 0, pfn 0x0d)
-      --> Fault (page directory entry not valid)
+  --> pde index:0x1b  pde contents:(valid 1, pfn 0x20)
+    --> pte index:0x03  pte contents:(valid 1, pfn 0x61)
+      --> Translates to Physical Address 0xc34 --> Value: 06
 Virtual Address 6b22:
-  --> pde index:0x1a  pde contents:(valid , pfn )
-    --> pte index:0x19  pte contents:(valid , pfn )
-      --> Fault (page table entry not valid)
+  --> pde index:0x1a  pde contents:(valid 1, pfn 0x52)
+    --> pte index:0x19  pte contents:(valid 1, pfn 0x47)
+      --> Translates to Physical Address 0x8e2 --> Value: 1a
 Virtual Address 03df:
-  --> pde index: 0 pde contents:(valid , pfn )
-    --> pte index:0x1a  pte contents:(valid , pfn )
+  --> pde index: 0x00 pde contents:(valid 1, pfn 0x5a)
+    --> pte index:0x1a  pte contents:(valid 0, pfn 0x7f)
       --> Fault (page table entry not valid)
 Virtual Address 69dc:
-  --> pde index:  pde contents:(valid , pfn )
-    --> pte index:  pte contents:(valid , pfn )
+  --> pde index: 0x1a pde contents:(valid 1, pfn 0x52)
+    --> pte index:0x0a  pte contents:(valid 0, pfn 0x7f)
       --> Fault (page table entry not valid)
 Virtual Address 317a:
-  --> pde index:  pde contents:(valid , pfn )
-    --> pte index:  pte contents:(valid , pfn )
-      --> Fault (page table entry not valid)
+  --> pde index: 0x0c pde contents:(valid 1, pfn 0x18)
+    --> pte index: 0x0b pte contents:(valid 1, pfn 0x35)
+      --> Translates to Physical Address 0x6ba --> Value: 0x1e
 Virtual Address 4546:
-  --> pde index:  pde contents:(valid , pfn )
-    --> pte index:  pte contents:(valid , pfn )
+  --> pde index: 0x11 pde contents:(valid 1, pfn 0x21)
+    --> pte index:0x0a  pte contents:(valid 0, pfn 0x7f)
       --> Fault (page table entry not valid)
 Virtual Address 2c03:
-  --> pde index:  pde contents:(valid , pfn )
-    --> pte index:  pte contents:(valid , pfn )
+  --> pde index: 0x0b pde contents:(valid 1, pfn 0x39)
+    --> pte index:0x00  pte contents:(valid 0, pfn 0x7f)
       --> Fault (page table entry not valid)
 Virtual Address 7fd7:
-  --> pde index:  pde contents:(valid , pfn )
-    --> pte index:  pte contents:(valid , pfn )
+  --> pde index: 0x1f pde contents:(valid 1, pfn 0x12)
+    --> pte index:0x1a  pte contents:(valid 0, pfn 0x7f)
       --> Fault (page table entry not valid)
 Virtual Address 390e:
-  --> pde index:  pde contents:(valid , pfn )
-    --> pte index:  pte contents:(valid , pfn )
-      --> Fault (page table entry not valid)
+  --> pde index: 0x0e pde contents:(valid 0, pfn 0x7f)
+      --> Fault (page directory entry not valid)
+      
 Virtual Address 748b:
-  --> pde index:  pde contents:(valid , pfn )
-    --> pte index:  pte contents:(valid , pfn )
+  --> pde index: 0x1d pde contents:(valid 1, pfn 0x00)
+    --> pte index:0x00  pte contents:(valid 0, pfn 0x7f)
       --> Fault (page table entry not valid)
 
 
