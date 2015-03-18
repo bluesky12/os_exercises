@@ -87,7 +87,45 @@ Virtual Address 7268:
     --> pte index:0x13  pte contents:(valid 1, pfn 0x65)
       --> Translates to Physical Address 0xca8 --> Value: 16
 ```
-
+Virtual Address 6c74:
+  --> pde index:0x1b  pde contents:(valid 0, pfn 0x0d)
+      --> Fault (page directory entry not valid)
+Virtual Address 6b22:
+  --> pde index:0x1a  pde contents:(valid , pfn )
+    --> pte index:0x19  pte contents:(valid , pfn )
+      --> Fault (page table entry not valid)
+Virtual Address 03df:
+  --> pde index: 0 pde contents:(valid , pfn )
+    --> pte index:0x1a  pte contents:(valid , pfn )
+      --> Fault (page table entry not valid)
+Virtual Address 69dc:
+  --> pde index:  pde contents:(valid , pfn )
+    --> pte index:  pte contents:(valid , pfn )
+      --> Fault (page table entry not valid)
+Virtual Address 317a:
+  --> pde index:  pde contents:(valid , pfn )
+    --> pte index:  pte contents:(valid , pfn )
+      --> Fault (page table entry not valid)
+Virtual Address 4546:
+  --> pde index:  pde contents:(valid , pfn )
+    --> pte index:  pte contents:(valid , pfn )
+      --> Fault (page table entry not valid)
+Virtual Address 2c03:
+  --> pde index:  pde contents:(valid , pfn )
+    --> pte index:  pte contents:(valid , pfn )
+      --> Fault (page table entry not valid)
+Virtual Address 7fd7:
+  --> pde index:  pde contents:(valid , pfn )
+    --> pte index:  pte contents:(valid , pfn )
+      --> Fault (page table entry not valid)
+Virtual Address 390e:
+  --> pde index:  pde contents:(valid , pfn )
+    --> pte index:  pte contents:(valid , pfn )
+      --> Fault (page table entry not valid)
+Virtual Address 748b:
+  --> pde index:  pde contents:(valid , pfn )
+    --> pte index:  pte contents:(valid , pfn )
+      --> Fault (page table entry not valid)
 
 
 （3）请基于你对原理课二级页表的理解，并参考Lab2建页表的过程，设计一个应用程序（可基于python, ruby, C, C++，LISP等）可模拟实现(2)题中描述的抽象OS，可正确完成二级页表转换。
