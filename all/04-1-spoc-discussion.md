@@ -33,7 +33,38 @@ void main (void) {
 gcc -O0 -o goodlocality goodlocality.c
 time ./goodlocality
 ```
-可以看到其执行时间。
+可以看到其执行时间。  
+  
+将A[i][j]改为A[j][i]，原来的行遍历变成了列遍历，相邻访问单元距离较远，局部性差：  
+```
+  #include <stdio.h>
+  #define NUM 1024
+  #define COUNT 10
+  int A[NUM][NUM];
+  void main (void) {
+    int i,j,k;
+    for (k = 0; k<COUNT; k++)
+    for (i = 0; i < NUM; i++)
+    for (j = 0; j	 < NUM; j++)
+        A[j][i] = i+j;
+    printf("%d count computing over!\n",i*j*k);
+  }
+```
+
+局部性好例子运行时间：  
+```
+  real	0m0.171s
+  user	0m0.069s
+  sys	0m0.012s
+```
+局部性差例子运行时间：  
+```
+  real	0m0.815s
+  user	0m0.616s
+  sys	0m0.049s
+```
+可以看出，相同算法相同功能，不同访问特点，不同局部性，最终运行效果可能会相差很大。   
+
 
 ## 小组思考题目
 ----
