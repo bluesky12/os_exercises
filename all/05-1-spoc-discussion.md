@@ -154,5 +154,5 @@ Time     PID: 0     PID: 1
 ```
 
 
-[实现代码点此处](https://github.com/bluesky12/os_exercises/blob/master/all/process-concept-homework.py)
+[代码见此处](https://github.com/bluesky12/os_exercises/blob/master/all/05-1-spoc-process-concept-homework.py)
 
