@@ -122,113 +122,114 @@ va 0xcd82c07c, pa 0x0c20907c, pde_idx 0x00000336, pde_ctx  0x00037003, pte_idx 0
 
 > 
 代码（C语言）：  
-```
-#include <stdio.h>
-
-using namespace std;
-
-typedef unsigned int addr;
-typedef unsigned int idx;
-typedef unsigned int ctx;
-
-class Vpmap
-{
-	addr va;
-	addr pa;
-	idx pde_idx;
-	idx pte_idx;
-	ctx pde_ctx;
-	ctx pte_ctx;
+```cpp
 	
-	ctx get_pde_ctx(idx index)
-	{
-		const int PDE_W= 0x2, PDE_V= 0x1;
-		bool writable= 1, valid= 1;
-		
-		ctx context= (index-0x300+1) << 12;
-		
-		context += writable ? PDE_W : 0;
-		context += valid ? PDE_V : 0;
-		
-		return context;
-	}
+	#include <stdio.h>
 	
-	ctx get_pte_ctx()
-	{
-		const int PDE_W= 0x2, PDE_V= 0x1;
-		bool writable= 1, valid= 1;
-		
-		ctx context= pa & 0xFFFFF000;
-		
-		context += writable ? PDE_W : 0;
-		context += valid ? PDE_V : 0;
-		
-		return context;
-	}
+	using namespace std;
 	
-	void translate()
-	{
-		pde_idx= va >> 22;
-		
-		pde_ctx= get_pde_ctx(pde_idx);
-		
-		pte_idx= (va&0x003FF000) >> 12;
-		
-		pte_ctx= get_pte_ctx();
-	}
+	typedef unsigned int addr;
+	typedef unsigned int idx;
+	typedef unsigned int ctx;
 	
-public :
-	Vpmap(addr va, addr pa)
+	class Vpmap
 	{
-		this->va= va;
-		this->pa= pa;
-		translate();
-	}
-	
-	void print()
-	{
-		printf("va 0x%08x, pa 0x%08x, pde_idx 0x%08x, pde_ctx 0x%08x, pte_idx 0x%08x, pte_ctx 0x%08x\n", 
-				va, pa, pde_idx, pde_ctx, pte_idx, pte_ctx);
-	}
-};
-
-int main()
-{
-	Vpmap maps[]= {
-		Vpmap(0xc2265b1f, 0x0d8f1b1f),
-		Vpmap(0xcc386bbc, 0x0414cbbc),
-		Vpmap(0xc7ed4d57, 0x07311d57),
-		Vpmap(0xca6cecc0, 0x0c9e9cc0),
-		Vpmap(0xc18072e8, 0x007412e8),
-		Vpmap(0xcd5f4b3a, 0x06ec9b3a),
-		Vpmap(0xcc324c99, 0x0008ac99),
-		Vpmap(0xc7204e52, 0x0b8b6e52),
-		Vpmap(0xc3a90293, 0x0f1fd293),
-		Vpmap(0xce6c3f32, 0x007d4f32)	
+		addr va;
+		addr pa;
+		idx pde_idx;
+		idx pte_idx;
+		ctx pde_ctx;
+		ctx pte_ctx;
+		
+		ctx get_pde_ctx(idx index)
+		{
+			const int PDE_W= 0x2, PDE_V= 0x1;
+			bool writable= 1, valid= 1;
+			
+			ctx context= (index-0x300+1) << 12;
+			
+			context += writable ? PDE_W : 0;
+			context += valid ? PDE_V : 0;
+			
+			return context;
+		}
+		
+		ctx get_pte_ctx()
+		{
+			const int PDE_W= 0x2, PDE_V= 0x1;
+			bool writable= 1, valid= 1;
+			
+			ctx context= pa & 0xFFFFF000;
+			
+			context += writable ? PDE_W : 0;
+			context += valid ? PDE_V : 0;
+			
+			return context;
+		}
+		
+		void translate()
+		{
+			pde_idx= va >> 22;
+			
+			pde_ctx= get_pde_ctx(pde_idx);
+			
+			pte_idx= (va&0x003FF000) >> 12;
+			
+			pte_ctx= get_pte_ctx();
+		}
+		
+	public :
+		Vpmap(addr va, addr pa)
+		{
+			this->va= va;
+			this->pa= pa;
+			translate();
+		}
+		
+		void print()
+		{
+			printf("va 0x%08x, pa 0x%08x, pde_idx 0x%08x, pde_ctx 0x%08x, pte_idx 0x%08x, pte_ctx 0x%08x\n", 
+					va, pa, pde_idx, pde_ctx, pte_idx, pte_ctx);
+		}
 	};
 	
-	
-	int num= sizeof(maps)/sizeof(maps[0]);
-	for (int i=0; i<num; ++i)
-		maps[i].print();
+	int main()
+	{
+		Vpmap maps[]= {
+			Vpmap(0xc2265b1f, 0x0d8f1b1f),
+			Vpmap(0xcc386bbc, 0x0414cbbc),
+			Vpmap(0xc7ed4d57, 0x07311d57),
+			Vpmap(0xca6cecc0, 0x0c9e9cc0),
+			Vpmap(0xc18072e8, 0x007412e8),
+			Vpmap(0xcd5f4b3a, 0x06ec9b3a),
+			Vpmap(0xcc324c99, 0x0008ac99),
+			Vpmap(0xc7204e52, 0x0b8b6e52),
+			Vpmap(0xc3a90293, 0x0f1fd293),
+			Vpmap(0xce6c3f32, 0x007d4f32)	
+		};
 		
-	return 0;
-}
+		
+		int num= sizeof(maps)/sizeof(maps[0]);
+		for (int i=0; i<num; ++i)
+			maps[i].print();
+			
+		return 0;
+	}
 
 ```
 
 输出结果：  
 ```
-va 0xc2265b1f, pa 0x0d8f1b1f, pde_idx 0x00000308, pde_ctx 0x00009003, pte_idx 0x00000265, pte_ctx 0x0d8f1003
-va 0xcc386bbc, pa 0x0414cbbc, pde_idx 0x00000330, pde_ctx 0x00031003, pte_idx 0x00000386, pte_ctx 0x0414c003
-va 0xc7ed4d57, pa 0x07311d57, pde_idx 0x0000031f, pde_ctx 0x00020003, pte_idx 0x000002d4, pte_ctx 0x07311003
-va 0xca6cecc0, pa 0x0c9e9cc0, pde_idx 0x00000329, pde_ctx 0x0002a003, pte_idx 0x000002ce, pte_ctx 0x0c9e9003
-va 0xc18072e8, pa 0x007412e8, pde_idx 0x00000306, pde_ctx 0x00007003, pte_idx 0x00000007, pte_ctx 0x00741003
-va 0xcd5f4b3a, pa 0x06ec9b3a, pde_idx 0x00000335, pde_ctx 0x00036003, pte_idx 0x000001f4, pte_ctx 0x06ec9003
-va 0xcc324c99, pa 0x0008ac99, pde_idx 0x00000330, pde_ctx 0x00031003, pte_idx 0x00000324, pte_ctx 0x0008a003
-va 0xc7204e52, pa 0x0b8b6e52, pde_idx 0x0000031c, pde_ctx 0x0001d003, pte_idx 0x00000204, pte_ctx 0x0b8b6003
-va 0xc3a90293, pa 0x0f1fd293, pde_idx 0x0000030e, pde_ctx 0x0000f003, pte_idx 0x00000290, pte_ctx 0x0f1fd003
-va 0xce6c3f32, pa 0x007d4f32, pde_idx 0x00000339, pde_ctx 0x0003a003, pte_idx 0x000002c3, pte_ctx 0x007d4003
+	va 0xc2265b1f, pa 0x0d8f1b1f, pde_idx 0x00000308, pde_ctx 0x00009003, pte_idx 0x00000265, pte_ctx 0x0d8f1003
+	va 0xcc386bbc, pa 0x0414cbbc, pde_idx 0x00000330, pde_ctx 0x00031003, pte_idx 0x00000386, pte_ctx 0x0414c003
+	va 0xc7ed4d57, pa 0x07311d57, pde_idx 0x0000031f, pde_ctx 0x00020003, pte_idx 0x000002d4, pte_ctx 0x07311003
+	va 0xca6cecc0, pa 0x0c9e9cc0, pde_idx 0x00000329, pde_ctx 0x0002a003, pte_idx 0x000002ce, pte_ctx 0x0c9e9003
+	va 0xc18072e8, pa 0x007412e8, pde_idx 0x00000306, pde_ctx 0x00007003, pte_idx 0x00000007, pte_ctx 0x00741003
+	va 0xcd5f4b3a, pa 0x06ec9b3a, pde_idx 0x00000335, pde_ctx 0x00036003, pte_idx 0x000001f4, pte_ctx 0x06ec9003
+	va 0xcc324c99, pa 0x0008ac99, pde_idx 0x00000330, pde_ctx 0x00031003, pte_idx 0x00000324, pte_ctx 0x0008a003
+	va 0xc7204e52, pa 0x0b8b6e52, pde_idx 0x0000031c, pde_ctx 0x0001d003, pte_idx 0x00000204, pte_ctx 0x0b8b6003
+	va 0xc3a90293, pa 0x0f1fd293, pde_idx 0x0000030e, pde_ctx 0x0000f003, pte_idx 0x00000290, pte_ctx 0x0f1fd003
+	va 0xce6c3f32, pa 0x007d4f32, pde_idx 0x00000339, pde_ctx 0x0003a003, pte_idx 0x000002c3, pte_ctx 0x007d4003
 ```
 
 ---
